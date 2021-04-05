@@ -3,14 +3,20 @@
   "version": "1.0.0",
   "description": "File Manager Tool for Editor.js",
   "license": "ISC",
-  "main": "./dist/main.bundle.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js"
   },
-  "keywords": [],
+  "keywords": [
+    "editorJs",
+    "file manager",
+    "editor.js",
+    "editorjs"
+  ],
   "author": "ituser",
+  "repository": "https://github.com/Roman19933/file-manager-editorJs",
   "devDependencies": {
     "@babel/core": "^7.13.8",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
