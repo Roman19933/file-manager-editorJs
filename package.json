@@ -20,6 +20,9 @@
     "type": "git",
     "url": "https://github.com/Roman19933/file-manager-editorJs"
   },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "@babel/core": "^7.13.8",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
