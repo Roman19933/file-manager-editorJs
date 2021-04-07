@@ -106,21 +106,6 @@ border: none;
     }
     &__upload {
       width: 165px;
-      // .upload {
-      //   &__input {
-      //     display: none;
-      //   }
-      //   &__btn {
-      //     padding: 10px;
-      //     display: flex;
-      //     align-items: center;
-      //     justify-content: center;
-      //     border: 1px solid #e0e0e0;
-      //     border-radius: 5px;
-      //     background: #ededed;
-      //     cursor: pointer;
-      //   }
-      // }
     }
     &__add {
       margin-left: 15px;
@@ -140,12 +125,10 @@ border: none;
 
   &-content {
     display: flex;
-    // flex-wrap: wrap;
     overflow: auto;
     height: calc(100% - 134px);
     position: relative;
     &__folders {
-        // width: 20%;
         min-width: 300px;
         height: 100%;
         overflow: auto;
@@ -258,12 +241,12 @@ border: none;
             }
             img {
               height: 100%;
+              width: 20px;
             }
           }
         }
     }
     &__items {
-        // width: 80%;
         display: flex;
         flex-wrap: wrap;
         height: fit-content;
@@ -275,9 +258,6 @@ border: none;
   &-item {
     width: 150px;
     margin-right: 25px;
-    // max-width: 250px;
-    // max-height: 550px;
-    // min-width: 190px;
     margin-bottom: 25px;
     position: relative;
     display: flex;
@@ -395,11 +375,6 @@ border: none;
       flex-direction: column;
       align-items: center;
     }
-    // overflow: hidden;
-    // &:hover,&.active {
-    //   transform: scale(0.95);
-    //   transition: .3s;
-    // }
     &.active {
       border: 1px solid #e0dede;
       padding: 5px;
@@ -409,7 +384,6 @@ border: none;
         content:'';
         width: 25px;
         height: 25px;
-        // background-image: url('../images/check.png');
         right: 5px;
         top: 5px;
       }
@@ -419,20 +393,6 @@ border: none;
     max-width: 500px;
     transition: 0.3s;
     overflow: hidden;
-  
-    // &:hover,
-    // &.active {
-    //   width: 300px;
-  
-    //   input {
-    //     padding: 0 100px 0 20px;
-    //   }
-  
-    //   button {
-    //     opacity: 1;
-    //     transform: translateX(0);
-    //   }
-    // }
   
     &__wrapper {
       position: relative;
@@ -465,8 +425,6 @@ border: none;
         color: #fff;
         font-size: 15px;
         border-radius: 9px;
-        // opacity: 0;
-        // transform: translateX(115%);
         transition: 0.3s;
         padding-bottom: 2px;
         display: flex;
@@ -497,16 +455,6 @@ border: none;
     &__input {
       display: none;
     }
-    // &__btn {
-    //   padding: 10px;
-    //   display: flex;
-    //   align-items: center;
-    //   justify-content: center;
-    //   border: 1px solid #e0e0e0;
-    //   border-radius: 5px;
-    //   background: #ededed;
-    //   cursor: pointer;
-    // }
   }
 }
 

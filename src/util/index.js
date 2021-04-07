@@ -2,7 +2,7 @@ let close = `data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/20
 
 //images
 import addFolder from "../images/add-folder.png";
-import file from "../images/file.png";
+import fileImg from "../images/file.png";
 import download from "../images/download.png";
 import edit from "../images/edit.png";
 import deleted from "../images/deleted.png";
@@ -48,17 +48,17 @@ export const getHtmlFolders = function (folder) {
   return `<li>
             <div class="folder-item">
               <div class="folder-action">
-                <button><label class="upload"><input type="file" data-upload="true" class="upload__input" data-folderId="${folder.id}"><img src="/images/upload.png" data-folderId="${folder.id}"></label></button>
-                <button><img src="/images/add-folder.png" data-addSubFolder="true" data-folderId="${folder.id}"></button>
-                <button><img src="/images/edit.png" data-edit="true" data-folderId="${folder.id}"></button>
-                <button><img src="/images/deleted.png" data-folderDeleted="true" data-folderId="${folder.id}"></button>
+                <button><label class="upload"><input type="file" data-upload="true" class="upload__input" data-folderId="${folder.id}"><img src="${upload}" data-folderId="${folder.id}"></label></button>
+                <button><img src="${addFolder}" data-addSubFolder="true" data-folderId="${folder.id}"></button>
+                <button><img src="${edit}" data-edit="true" data-folderId="${folder.id}"></button>
+                <button><img src="${deleted}" data-folderDeleted="true" data-folderId="${folder.id}"></button>
               </div>
               <span class="folder-item__name" data-folderId="${folder.id}">${folder.title}</span>
               <div class="fm-item__input fm-item__input_folder">
                 <input type="text" class="title" data-title="true" id="title" value="${folder.title}">   
                 <div class="fm-item__btn fm-item__btn_folder">
-                  <button><img src="/images/ok.png" data-folderSend="true" data-folderId="${folder.id}"></button>   
-                  <button><img src="/images/cancel.png" data-folderCancel="true" data-folderId="${folder.id}"></button>   
+                  <button><img src="${ok}" data-folderSend="true" data-folderId="${folder.id}"></button>   
+                  <button><img src="${cancel}" data-folderCancel="true" data-folderId="${folder.id}"></button>   
                 </div>
               </div>
             </div>
@@ -68,12 +68,12 @@ export const getHtmlFolders = function (folder) {
 
 //get html fot type
 export const getFilesForType = function (file, index, url) {
-  let img = file.mime.includes('image') ? `${url}${file.path}` : "/images/file.png"
+  let img = file.mime.includes('image') ? `${url}${file.path}` : fileImg
   return `<div class="fm-item " data-index="${index}" >
                   <div class="fm-item__menu">
-                    <button data-index="${index}"><img src="/images/edit.png" data-edit="true"></button>
-                    <button  data-index="${index}"><img src="/images/download.png" data-download="true"></button>
-                    <button data-index="${index}"><img src="/images/deleted.png" data-deleted="true"></button>
+                    <button data-index="${index}"><img src="${edit}" data-edit="true"></button>
+                    <button  data-index="${index}"><img src="${download}" data-download="true"></button>
+                    <button data-index="${index}"><img src="${deleted}" data-deleted="true"></button>
                   </div>
                   <img src="${img}" alt="${file.alt}" title="${file.alt}" data-file="true">
                   <span class="fm-item__title" data-file="true">${file.title}</span>

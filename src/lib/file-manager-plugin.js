@@ -209,7 +209,6 @@ export default class FileManager {
         this.api.events.emit('add:file', this._data);
         this._data = {};
         this.close()
-
       }
     }
   };

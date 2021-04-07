@@ -75,11 +75,6 @@ export default class EditorJsFm {
         if (this.flagEditImage) {
             this.data.name = this.node.name.value
         }
-
-        // this.api.events.on('cancel', (event) => {
-        //     console.log(event)
-        //     this.api.blocks.delete(event)
-        // });
         return this.data
     }
 
