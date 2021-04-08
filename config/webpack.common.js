@@ -11,7 +11,7 @@ module.exports = {
         path: path.build,
         filename: '[name].bundle.js',
         assetModuleFilename: 'images/[name][ext][query]',
-        library: 'FileManagerEditorJs',
+        library: 'EditorJsFm',
         libraryTarget: 'umd',
         libraryExport: 'default'
     },

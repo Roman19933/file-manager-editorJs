@@ -14,7 +14,7 @@ module.exports = merge(common, {
     path: path.build,
     publicPath: '/',
     filename: 'js/[name].bundle.js',
-    library: 'FileManager',
+    library: 'EditorJsFm',
     libraryTarget: 'umd',
     libraryExport: 'default'
   },
