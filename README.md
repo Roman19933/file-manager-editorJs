@@ -35,14 +35,14 @@ var editor = EditorJS({
         apiUrl: "https://example/api/v1",
         uploadUrl: "https://example",
         routes: {
-            allFoldersOrCurentFolder: 'filemanager/folders/425bce23-df39-4d41-8fb0-bedced304f70' or 'filemanager/folders',
+            allFoldersOrCurentFolder: 'filemanager/folders/2' or 'filemanager/folders',
             subFoldersAndFiles: 'filemanager/folders/${_id}',
             updateFolder: 'filemanager/folder/${_id}',
             deleteFolder: 'filemanager/folder/${_id}',
             createFolder: 'filemanager/folders',
             updateFile: 'filemanager/file/${_id}',
             deleteFile: 'filemanager/file/${_id}',
-            uploadFile: 'filemanager/folders/${_id}/file', - sss
+            uploadFile: 'filemanager/folders/${_id}/file'
         }
       }
     }
@@ -55,7 +55,7 @@ var editor = EditorJS({
 
 | Route                     | Description                     |
 | --------------------------| ------------------------------- |
-| allFoldersOrCurentFolder  |On this route we receive all folders from the server, or a specific folder to id             |
+| allFoldersOrCurentFolder  | On this route we receive all folders from the server, or a specific folder to id             |
 | subFoldersAndFiles        | On this route we receive all folders and files/images to a specific folder               |
 | updateFolder              | On this route we edit a folder      |
 | deleteFolder              | On this route we deleted a folder        |
@@ -63,6 +63,12 @@ var editor = EditorJS({
 | updateFile                | On this route we edit a file/image        |
 | deleteFile                | On this route we deleted a file/image       |
 | uploadFile                | On this route we upload file/image to folder        |
+
+If route <strong>allFoldersOrCurentFolder</strong> includes <strong>id</strong> to folder <strong>'filemanager/folders/ID'</strong>, server response 
+must be an object.
+
+If route <strong>allFoldersOrCurentFolder</strong> does not include <strong>id</strong> to folder <strong>'filemanager/folders'</strong>, server response 
+must be an array of objects.
 
 ## Config Params
 
