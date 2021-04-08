@@ -32,10 +32,10 @@ var editor = EditorJS({
       class: EditorJsFm,
       config: {
         token: "token",
-        apiUrl: "https://api-oprosi.demka.online/api/v1",
-        uploadUrl: "https://api-oprosi.demka.online",
+        apiUrl: "https://example/api/v1",
+        uploadUrl: "https://example",
         routes: {
-            allFoldersOrCurentFolder: 'filemanager/folders/425bce23-df39-4d41-8fb0-bedced304f70',
+            allFoldersOrCurentFolder: 'filemanager/folders/425bce23-df39-4d41-8fb0-bedced304f70' or 'filemanager/folders',
             subFoldersAndFiles: 'filemanager/folders/${_id}',
             updateFolder: 'filemanager/folder/${_id}',
             deleteFolder: 'filemanager/folder/${_id}',
@@ -51,6 +51,18 @@ var editor = EditorJS({
   ...
 });
 ```
+<strong>${_id}</strong> - this means that route will contain an id (that is, action on the specific folder or file or image)
+
+| Route                     | Description                     |
+| --------------------------| ------------------------------- |
+| allFoldersOrCurentFolder  |On this route we receive all folders from the server, or a specific folder to id             |
+| subFoldersAndFiles        | On this route we receive all folders and files/images to a specific folder               |
+| updateFolder              | On this route we edit a folder      |
+| deleteFolder              | On this route we deleted a folder        |
+| createFolder              | On this route we create subFolder        |
+| updateFile                | On this route we edit a file/image        |
+| deleteFile                | On this route we deleted a file/image       |
+| uploadFile                | On this route we upload file/image to folder        |
 
 ## Config Params
 
