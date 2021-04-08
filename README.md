@@ -6,11 +6,11 @@ This file manager works with files and photos.
 
 ### Install via NPM
 
-<!-- Get the package
+Get the package
 
 ```shell
-npm i --save-dev @editorjs/simple-image
-``` -->
+npm i file-manager-editor-js --save
+```
 
 Include module at your application
 
