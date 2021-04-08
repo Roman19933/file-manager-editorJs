@@ -1,8 +1,6 @@
-# Simple Image Tool
+# File Manager To EditorJs
 
-Provides Image Blocks for the [Editor.js](https://editorjs.io).
-
-Works only with pasted image URLs and requires no server-side uploader.
+This file manager works with files and photos.
 
 ## Installation
 
@@ -17,5 +15,5 @@ npm i --save-dev @editorjs/simple-image
 Include module at your application
 
 ```javascript
-const SimpleImage = require('@editorjs/simple-image');
+import FileManager from "file-manager-editor-js/src/lib/editor-js-connect";
 ```
