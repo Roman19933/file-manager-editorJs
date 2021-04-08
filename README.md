@@ -1,4 +1,4 @@
 # File Manager To EditorJs
-## Installation
+<h2>Installation</h2>
 <p>Get the package</p>
 <code>sss</code>
