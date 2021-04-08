@@ -1,3 +1,6 @@
+![](https://badgen.net/badge/Editor.js/v2.0/blue)
+
+
 # File Manager To EditorJs
 
 This file manager works with files and photos.
