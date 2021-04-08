@@ -48,43 +48,46 @@ export default class FileManager {
     let dataSet = target.dataset;
     let content = this.mw.querySelector('.fm-content__items');
     if (tagName === 'SPAN' && dataSet.folderid) {
-      try {
-        let li = parentNode.parentNode;
-        let ul = li.querySelector('.tree__children')
-        let allTitle = document.querySelectorAll('.folder-item__name')
-        allTitle.forEach(e => {
-          e.classList.remove('active')
-        })
-        target.classList.add('active')
-        this._folderId = dataSet.folderid;
-        let childrenContainer = parentNode.parentNode.querySelector('ul');
-        content.innerHTML = '';
-        if (childrenContainer) childrenContainer.remove();
-        let data = await this.axios.getSubFoldersFiles(dataSet.folderid);
-        let subFolder = data.Folder
-        this._files = data.File
-        if (subFolder.length) {
-          let plusMinus = document.createElement('span');
-          plusMinus.setAttribute('data-nesting', true);
-          plusMinus.classList.add('nesting');
-          let nested = parentNode.parentNode.querySelector('.nesting');
-          if (!nested) {
-            parentNode.parentNode.insertAdjacentElement('afterbegin', plusMinus)
+      let activeClass = target.classList.contains('active');
+      if (!activeClass) {
+        try {
+          let li = parentNode.parentNode;
+          let ul = li.querySelector('.tree__children')
+          let allTitle = document.querySelectorAll('.folder-item__name')
+          allTitle.forEach(e => {
+            e.classList.remove('active')
+          })
+          target.classList.add('active')
+          this._folderId = dataSet.folderid;
+          let childrenContainer = parentNode.parentNode.querySelector('ul');
+          content.innerHTML = '';
+          if (childrenContainer) childrenContainer.remove();
+          let data = await this.axios.getSubFoldersFiles(dataSet.folderid);
+          let subFolder = data.Folder
+          this._files = data.File
+          if (subFolder.length) {
+            let plusMinus = document.createElement('span');
+            plusMinus.setAttribute('data-nesting', true);
+            plusMinus.classList.add('nesting');
+            let nested = parentNode.parentNode.querySelector('.nesting');
+            if (!nested) {
+              parentNode.parentNode.insertAdjacentElement('afterbegin', plusMinus)
+            }
+            let children = document.createElement('ul');
+            children.classList.add('tree__children')
+            parentNode.parentNode.appendChild(children)
+            subFolder.forEach(folder => {
+              children.insertAdjacentHTML('afterbegin', getHtmlFolders(folder))
+            });
           }
-          let children = document.createElement('ul');
-          children.classList.add('tree__children')
-          parentNode.parentNode.appendChild(children)
-          subFolder.forEach(folder => {
-            children.insertAdjacentHTML('afterbegin', getHtmlFolders(folder))
-          });
+          if (this._files) {
+            this._files.forEach((file, index) => {
+              content.insertAdjacentHTML('afterbegin', getFilesForType(file, index, this.config.uploadUrl))
+            });
+          }
+        } catch (e) {
+          console.log(e)
         }
-        if (this._files) {
-          this._files.forEach((file, index) => {
-            content.insertAdjacentHTML('afterbegin', getFilesForType(file, index, this.config.uploadUrl))
-          });
-        }
-      } catch (e) {
-        console.log(e)
       }
     } else if (tagName === 'SPAN' && dataSet.nesting) {
       parentNode.classList.toggle('show')
@@ -109,6 +112,7 @@ export default class FileManager {
       });
     } else if (dataSet.folderdeleted) {
       await this.axios.deleteFolder(dataSet.folderid)
+      content.innerText = '';
       await this.axios.getAllFolders()
     } else if (dataSet.addsubfolder || dataSet.addfolder) {
       let payload = {

@@ -66,7 +66,7 @@ export const getHtmlFolders = function (folder) {
           `
 }
 
-//get html fot type
+//get html for type
 export const getFilesForType = function (file, index, url) {
   let img = file.mime.includes('image') ? `${url}${file.path}` : fileImg
   return `<div class="fm-item " data-index="${index}" >

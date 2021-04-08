@@ -108,6 +108,7 @@ border: none;
       width: 165px;
     }
     &__add {
+      display: none;
       margin-left: 15px;
       // width: 40px;
       height: 40px;
@@ -129,7 +130,7 @@ border: none;
     height: calc(100% - 134px);
     position: relative;
     &__folders {
-        min-width: 300px;
+        min-width: 350px;
         height: 100%;
         overflow: auto;
         width: auto;
@@ -202,16 +203,14 @@ border: none;
                 font-size: 20px;
               }
             }
-            &.show {
-              .nesting {
-                &:before {
-                  content:'-';
-                }
+            &.show > span.nesting {
+              &:before {
+                content:'-';
               }
-              .tree__children {
-                height: 100%;
-                margin-top: 10px;
-              }
+            }
+            &.show > ul.tree__children  {
+              height: 100%;
+              margin-top: 10px;
             }
           }
           .folder-action {

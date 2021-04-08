@@ -3,10 +3,11 @@ import { injectDomHtml, getHtmlFolders } from "../util/index";
 
 export default class restApi {
   constructor({
-    token, apiUrl
+    token, apiUrl, routes
   }) {
     this.token = token;
     this.apiUrl = apiUrl;
+    this.routes = routes;
     this.client = null;
   }
 
@@ -28,16 +29,26 @@ export default class restApi {
       }
     );
   }
+
+  //return routes after change ${_id} to id
+  returnRoutes(route, id) {
+    return route.replace('${_id}', id)
+  }
+
   //get all folders
   async getAllFolders() {
     let el = document.querySelector('.fm');
     let ul = document.querySelector('.fm-content__folders ul');
     ul.innerHTML = '';
     try {
-      let { data } = await this.client.get('filemanager/folders')
+      let { data } = await this.client.get(this.routes.allFoldersOrCurentFolder)
+      if (!Array.isArray(data.data)) {
+        return injectDomHtml(el, '.fm-content__folders ul', 'afterbegin', getHtmlFolders(data.data))
+      }
       data.data.forEach(element => {
         injectDomHtml(el, '.fm-content__folders ul', 'afterbegin', getHtmlFolders(element))
       });
+
     } catch (e) {
       console.log(e)
     }
@@ -46,7 +57,7 @@ export default class restApi {
   //get file/subfolders
   async getSubFoldersFiles(id) {
     try {
-      let { data } = await this.client.get(`filemanager/folders/${id}`)
+      let { data } = await this.client.get(this.returnRoutes(this.routes.subFoldersAndFiles, id))
       return data.data;
     } catch (e) {
       console.log(e)
@@ -56,43 +67,7 @@ export default class restApi {
   //update folders
   async updateFolder(id, payload) {
     try {
-      await this.client.put(`filemanager/folder/${id}`, payload)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  //update files
-  async updateFile(id, payload) {
-    try {
-      await this.client.put(`filemanager/file/${id}`, payload)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  //delete files
-  async deleteFile(id) {
-    try {
-      await this.client.delete(`filemanager/file/${id}`)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  //delete folders
-  async deleteFolder(id) {
-    try {
-      await this.client.delete(`filemanager/folder/${id}`)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  //upload files
-  async uploadFile(folderId, payload) {
-    try {
-      await this.client.post(`filemanager/folders/${folderId}/file`, payload)
+      await this.client.put(this.returnRoutes(this.routes.updateFolder, id), payload)
     } catch (e) {
       console.log(e)
     }
@@ -101,10 +76,45 @@ export default class restApi {
   //add folder
   async createFolder(payload) {
     try {
-      await this.client.post(`filemanager/folders`, payload)
+      await this.client.post(this.routes.createFolder, payload)
     } catch (e) {
       console.log(e)
     }
   }
 
+  //delete folders
+  async deleteFolder(id) {
+    try {
+      await this.client.delete(this.returnRoutes(this.routes.deleteFolder, id))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //update files
+  async updateFile(id, payload) {
+    try {
+      await this.client.put(this.returnRoutes(this.routes.updateFile, id), payload)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //delete files
+  async deleteFile(id) {
+    try {
+      await this.client.delete(this.returnRoutes(this.routes.deleteFile, id))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //upload files
+  async uploadFile(folderId, payload) {
+    try {
+      await this.client.post(this.returnRoutes(this.routes.uploadFile, folderId), payload)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
