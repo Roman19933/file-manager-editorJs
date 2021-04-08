@@ -1,6 +1,15 @@
-# File Manager To EditorJs
-<h2>Installation</h2>
-<p>Get the package</p>
-<code>npm i --save-dev @editorjs/simple-image</code>
-<p>Include module at your application</p>
-<code>const SimpleImage = require('@editorjs/simple-image');</code>
+## Installation
+
+### Install via NPM
+
+Get the package
+
+```shell
+npm i --save-dev @editorjs/simple-image
+```
+
+Include module at your application
+
+```javascript
+const SimpleImage = require('@editorjs/simple-image');
+```
