@@ -81,14 +81,14 @@ must be an object.
 If route <strong>allFoldersOrCurentFolder</strong> does not include <strong>id</strong> to folder <strong>'filemanager/folders'</strong>, server response 
 must be an array of objects.
 
-Routes <strong>allFoldersOrCurentFolder</strong> have required fields:
+Route <strong>allFoldersOrCurentFolder</strong> have required fields:
 
 | Field          | Type      | Description                     |
 | -------------- | --------- | ------------------------------- |
 | title          | `string`  | folder name            |
 | id         | `string`  | folder id               |
 
-Routes <strong>subFoldersAndFiles</strong> have required fields:
+Route <strong>subFoldersAndFiles</strong> have required fields:
 
 | Field          | Type      | Description                     |
 | -------------- | --------- | ------------------------------- |
