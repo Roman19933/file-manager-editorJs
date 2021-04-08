@@ -113,3 +113,25 @@ Field <strong>Folder</strong> have required fields:
 | -------------- | --------- | ------------------------------- |
 | id         | `string`  | id               |
 | title         | `string`  | file name               |
+
+## Output data
+
+| Field          | Type      | Description                     |
+| -------------- | --------- | ------------------------------- |
+| url            | `string`  | image's/files url                     |
+| name        | `string`  | image's/files name                 |
+| type     | `string` | type ('image' or 'file')            |
+
+
+```json
+{
+    "type" : "image",
+    "data" : {
+        "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
+        "caption" : "Roadster // tesla.com",
+        "withBorder" : false,
+        "withBackground" : false,
+        "stretched" : true
+    }
+}
+```
