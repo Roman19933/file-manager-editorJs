@@ -18,6 +18,10 @@ Include module at your application
 import EditorJsFm from "file-manager-editor-js/src/lib/editor-js-connect";
 ```
 
+```style
+import "file-manager-editor-js/src/style/main.scss";
+```
+
 ## Usage
 
 Add a new Tool to the `tools` property of the Editor.js initial config.
