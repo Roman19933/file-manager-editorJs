@@ -1,7 +1,3 @@
-![](https://badgen.net/github/license/amio/badgen-service)
-![](https://badgen.net/github/watchers/micromatch/micromatch)
-![](https://badgen.net/github/forks/micromatch/micromatch)
-
 # File Manager To EditorJs
 
 This file manager works with files and photos.
