@@ -125,11 +125,11 @@ Field <strong>Folder</strong> have required fields:
 
 ```json
 {
-    "type" : "image" or "file",
+    "type" : "image or file",
     "data" : {
-        "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
-        "name" : "Roadster // tesla.com",
-        "type" : "image" or "file"
+        "url" : "https://example/hero.jpg",
+        "name" : "Name",
+        "type" : "image or file"
     }
 }
 ```
