@@ -53,6 +53,17 @@ var editor = EditorJS({
 ```
 <strong>${_id}</strong> - this means that route will contain an id (that is, action on the specific folder or file or image)
 
+## Config Params
+
+| Field          | Type      | Description                     |
+| -------------- | --------- | ------------------------------- |
+| token          | `string`  | authorization token             |
+| apiUrl         | `string`  | route to the API                |
+| uploadUrl      | `string`  | domain where is image/file      |
+| routes         | `object`  | routes for work with api        |
+
+## Routes
+
 | Route                     | Description                     |
 | --------------------------| ------------------------------- |
 | allFoldersOrCurentFolder  | On this route we receive all folders from the server, or a specific folder to id             |
@@ -70,11 +81,35 @@ must be an object.
 If route <strong>allFoldersOrCurentFolder</strong> does not include <strong>id</strong> to folder <strong>'filemanager/folders'</strong>, server response 
 must be an array of objects.
 
-## Config Params
+Routes <strong>allFoldersOrCurentFolder</strong> have required fields:
 
 | Field          | Type      | Description                     |
 | -------------- | --------- | ------------------------------- |
-| token          | `string`  | authorization token             |
-| apiUrl         | `string`  | route to the API                |
-| uploadUrl      | `string`  | domain where is image/file      |
-| routes         | `object`  | routes for work with api        |
+| title          | `string`  | folder name            |
+| id         | `string`  | folder id               |
+
+Routes <strong>subFoldersAndFiles</strong> have required fields:
+
+| Field          | Type      | Description                     |
+| -------------- | --------- | ------------------------------- |
+| title          | `string`  | folder name            |
+| id         | `string`  | folder id               |
+| File         | `array`  | file to main folder               |
+| Folder         | `array`  | subFolder to main folder              |
+
+Field <strong>File</strong> have required fields:
+
+| Field          | Type      | Description                     |
+| -------------- | --------- | ------------------------------- |
+| alt          | `string`  | alt            |
+| id         | `string`  | id               |
+| mime         | `string`  | mime type ('application/msword','image/png', ...)            |
+| path         | `string`  | path to file or image without domain ('/uploads/2021-04-08/1617882721-1614172940-ExamTests_V1-(1).doc')               |
+| title         | `string`  | file name               |
+
+Field <strong>Folder</strong> have required fields:
+
+| Field          | Type      | Description                     |
+| -------------- | --------- | ------------------------------- |
+| id         | `string`  | id               |
+| title         | `string`  | file name               |
