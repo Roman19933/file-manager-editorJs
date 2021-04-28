@@ -1,6 +1,6 @@
 # File Manager To EditorJs
 
-This file manager works with files and photos.
+This file manager works with files and photos and audio.
 
 ## Installation
 
