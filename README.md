@@ -72,12 +72,12 @@ var editor = EditorJS({
 | --------------------------| ------------------------------- |
 | allFoldersOrCurentFolder  | On this route we receive all folders from the server, or a specific folder to id             |
 | subFoldersAndFiles        | On this route we receive all folders and files/images to a specific folder               |
-| updateFolder              | On this route we edit a folder      |
+| updateFolder              | On this route we edit a folder, request params {title: 'new title', id: folder id}      |
 | deleteFolder              | On this route we deleted a folder        |
-| createFolder              | On this route we create subFolder        |
-| updateFile                | On this route we edit a file/image        |
+| createFolder              | On this route we create subFolder, request params {title: 'folder name (default: new folder)', folderId: parent folder id or ''}        |
+| updateFile                | On this route we edit a file/image, request params {title: 'new title', alt: 'new alt'}        |
 | deleteFile                | On this route we deleted a file/image       |
-| uploadFile                | On this route we upload file/image to folder        |
+| uploadFile                | On this route we upload file/image to folder, request params {folderId: folder id where upload file, file: upload file}        |
 
 If route <strong>allFoldersOrCurentFolder</strong> includes <strong>id</strong> to folder <strong>'filemanager/folders/ID'</strong>, server response 
 must be an object.
@@ -124,7 +124,7 @@ Field <strong>Folder</strong> have required fields:
 | -------------- | --------- | ------------------------------- |
 | url            | `string`  | image's/files url                     |
 | name        | `string`  | image's/files name                 |
-| type     | `string` | type ('image' or 'file')            |
+| type     | `string` | type ('image' or 'file' or 'audio')            |
 
 
 ```json
@@ -133,7 +133,7 @@ Field <strong>Folder</strong> have required fields:
     "data" : {
         "url" : "https://example/hero.jpg",
         "name" : "Name",
-        "type" : "image or file"
+        "type" : "image or file or audio"
     }
 }
 ```
