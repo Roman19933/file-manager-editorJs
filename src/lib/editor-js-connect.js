@@ -45,12 +45,12 @@ export default class EditorJsFm {
         this.node.wrapper = document.createElement('div');
         this.node.wrapper.classList.add('node-wrapper')
         if (Object.keys(this.data).length && this.flagChoose) {
-            if (this.data.type !== 'image') {
+            if (this.data.type === 'file') {
                 let a = document.createElement('a');
                 a.setAttribute('href', this.data.url);
                 a.text = this.data.name
                 this.node.wrapper.appendChild(a)
-            } else {
+            } else if (this.data.type === 'image') {
                 let img = document.createElement('img');
                 img.setAttribute('src', this.data.url);
                 let input = document.createElement('input');
@@ -60,6 +60,13 @@ export default class EditorJsFm {
                 this.node.wrapper.appendChild(img)
                 this.node.wrapper.appendChild(input)
                 this.flagEditImage = true
+            } else {
+                let audio = document.createElement('audio');
+                let source = document.createElement('source');
+                audio.setAttribute('controls', true)
+                source.setAttribute('src', this.data.url)
+                audio.appendChild(source);
+                this.node.wrapper.appendChild(audio);
             }
             this.flagChoose = false
 
@@ -67,6 +74,7 @@ export default class EditorJsFm {
             this.node.button = document.createElement('button');
             this.node.button.classList.add('cdx-button');
             this.node.button.setAttribute('data-openfm', true);
+            this.node.button.setAttribute('type', 'button');
             this.node.button.innerText = "Open File Manager"
             this.node.wrapper.append(this.node.button)
             this.node.button.addEventListener('click', () => {
