@@ -122,14 +122,14 @@ Field <strong>Folder</strong> have required fields:
 
 | Field          | Type      | Description                     |
 | -------------- | --------- | ------------------------------- |
-| url            | `string`  | image's/files url                     |
-| name        | `string`  | image's/files name                 |
-| type     | `string` | type ('image' or 'file' or 'audio')            |
+| url            | `string`  | image's/files/audio url                     |
+| name        | `string`  | image's/files/audio name                 |
+| type     | `string` | type ('image' or 'audio' or 'file')            |
 
 
 ```json
 {
-    "type" : "image or file",
+    "type" : "FileManager",
     "data" : {
         "url" : "https://example/hero.jpg",
         "name" : "Name",
