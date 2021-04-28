@@ -1,8 +1,10 @@
+/**
+ * images
+ */
 let close = `data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3E%3C/svg%3E`;
-
-//images
 import addFolder from "../images/add-folder.png";
 import fileImg from "../images/file.png";
+import mp3 from "../images/mp3.png";
 import download from "../images/download.png";
 import edit from "../images/edit.png";
 import deleted from "../images/deleted.png";
@@ -10,8 +12,10 @@ import cancel from "../images/cancel.png";
 import ok from "../images/ok.png";
 import upload from "../images/upload.png";
 
-//modal window
-export const ModalWindow = function (options) {
+/**
+ * html structure to file manager
+ */
+export const ModalWindow = function () {
   let fmmHTML = `
   <div class="fm-wrapper">
   <div class="fm-top">
@@ -32,10 +36,10 @@ export const ModalWindow = function (options) {
   </div>
   <div class="fm-bottom">
     <button class="button-choose" data-choose="true">
-      Выбрать
+      Choose
     </button>
     <button class="button-cancel" data-close="true">
-      Отмена
+      Cancel
     </button>
   </div>
 </div>
@@ -43,7 +47,11 @@ export const ModalWindow = function (options) {
   return createAndInjectDomElement('div', 'fm', 'afterbegin', fmmHTML)
 }
 
-//html to folders
+/**
+ * html structure to folders
+ * @param {Object} folder - folder object
+ * 
+ */
 export const getHtmlFolders = function (folder) {
   return `<li>
             <div class="folder-item">
@@ -66,16 +74,21 @@ export const getHtmlFolders = function (folder) {
           `
 }
 
-//get html for type
+/**
+ * html structure to file
+ * @param {Object} file - file object
+ * @param {Number} index - index to file in array
+ * @param {String} url - furl to file
+ */
 export const getFilesForType = function (file, index, url) {
-  let img = file.mime.includes('image') ? `${url}${file.path}` : fileImg
+  let img = file.mime.includes('image') ? `${url}${file.path}` : file.mime.includes('audio') ? mp3 : fileImg
   return `<div class="fm-item " data-index="${index}" >
                   <div class="fm-item__menu">
-                    <button data-index="${index}"><img src="${edit}" data-edit="true"></button>
-                    <button  data-index="${index}"><img src="${download}" data-download="true"></button>
-                    <button data-index="${index}"><img src="${deleted}" data-deleted="true"></button>
+                    <button data-index="${index}"><img src="${edit}" data-edit="true" class="fm-item__img_menu"></button>
+                    <button  data-index="${index}"><img src="${download}" data-download="true" class="fm-item__img_menu"></button>
+                    <button data-index="${index}"><img src="${deleted}" data-deleted="true" class="fm-item__img_menu"></button>
                   </div>
-                  <img src="${img}" alt="${file.alt}" title="${file.alt}" data-file="true">
+                  <img src="${img}" alt="${file.alt}" title="${file.alt}" data-file="true" class="fm-item__img_main">
                   <span class="fm-item__title" data-file="true">${file.title}</span>
                     <div class="fm-item__input" data-index="${index}">
                       <label for="title">Title</label>
@@ -90,17 +103,36 @@ export const getFilesForType = function (file, index, url) {
                 </div>`
 }
 
-//injectDomElement
+/**
+ * html structure to file
+ * @param {String} element - parent element
+ * @param {String} classTarget - search class
+ * @param {String} typeInject - type of inject 
+ * @param {String} html - html
+ */
 export const injectDomElement = function (element, classTarget, typeInject, html) {
   return element.querySelector(classTarget).insertAdjacentElement(typeInject, html)
 }
 
-//injectDomHtml
+/**
+ * html structure to file
+ * @param {String} element - parent element
+ * @param {String} classTarget - search class
+ * @param {String} typeInject - type of inject 
+ * @param {String} html - html
+ */
 export const injectDomHtml = function (element, classTarget, typeInject, html) {
   return element.querySelector(classTarget).insertAdjacentHTML(typeInject, html)
 }
 
-//createAndInjectDomElement
+/**
+ * html structure to file
+ * @param {String} tag - creating tag
+ * @param {String} classes - element class
+ * @param {String} typeInject - type of inject 
+ * @param {String} html - html
+ * @param {String} attr - element attributes
+ */
 export const createAndInjectDomElement = function (tag, classes, typeInject, html, attr) {
   let el = document.createElement(tag);
   el.classList.add(classes)

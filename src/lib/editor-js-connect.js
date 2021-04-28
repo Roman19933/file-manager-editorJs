@@ -15,11 +15,18 @@ export default class EditorJsFm {
         this.node = {
             wrapper: null,
             name: null,
-            url: null
+            url: null,
+            button: null
         }
     }
 
-    //image and title to ui EditorJs
+    /**
+   * Get Tool toolbox settings
+   * icon - Tool icon's SVG
+   * title - title to show in toolbox
+   *
+   * @returns {{icon: string, title: string}}
+   */
     static get toolbox() {
         return {
             title: 'FileManager',
@@ -27,7 +34,13 @@ export default class EditorJsFm {
         };
     }
 
-    //render file mahager
+    /**
+   * Renders Block content
+   *
+   * @public
+   *
+   * @returns {HTMLDivElement}
+   */
     render() {
         this.node.wrapper = document.createElement('div');
         this.node.wrapper.classList.add('node-wrapper')
@@ -51,17 +64,32 @@ export default class EditorJsFm {
             this.flagChoose = false
 
         } else {
+            this.node.button = document.createElement('button');
+            this.node.button.classList.add('cdx-button');
+            this.node.button.setAttribute('data-openfm', true);
+            this.node.button.innerText = "Open File Manager"
+            this.node.wrapper.append(this.node.button)
+            this.node.button.addEventListener('click', () => {
+                this.fm.open()
+            });
             this.fm.open()
         }
         return this.node.wrapper;
     }
 
-    //save choose data
+    /**
+     * Return Block data
+     *
+     * @public
+     *
+     * @returns {FileData}
+     */
     save(e) {
         this.api.events.on('add:file', (event) => {
             if (event && this.flagChoose) {
+                this.node.button.remove();
                 e.insertAdjacentHTML('afterbegin', event.html)
-                this.getFile({ type: event.type })
+                this.getFile({ type: event.type, name: event.objNode.title })
                 this.flagChoose = false
             }
         });
@@ -78,19 +106,32 @@ export default class EditorJsFm {
         return this.data
     }
 
-    //type file views    
-    getFile(file) {
-        if (file.type === 'image') {
+    /**
+     * 
+     * @param {String} type the type of file selected
+     * @param {String} name the name of file selected
+     * this method forms a date object
+     */
+    getFile({ type, name }) {
+        if (type === 'image') {
             this.node.name = this.node.wrapper.querySelector('input')
             this.node.url = this.node.wrapper.querySelector('img')
             this.flagImage = true;
-        } else {
+        } else if (type === 'file') {
             this.node.name = this.node.wrapper.querySelector('a').text
             this.node.url = this.node.wrapper.querySelector('a').href
             Object.assign(this.data, {
                 url: this.node.url,
                 name: this.node.name,
                 type: 'file'
+            });
+        } else {
+            this.node.name = name
+            this.node.url = this.node.wrapper.querySelector('audio source').src
+            Object.assign(this.data, {
+                url: this.node.url,
+                name: this.node.name,
+                type: 'audio'
             });
         }
     }

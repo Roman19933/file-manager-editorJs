@@ -1,6 +1,16 @@
 import { ModalWindow, getFilesForType, getHtmlFolders } from "../util/index";
 import axios from "./axios"
+/**
+ * Class for work with file manager:
+ *  - show/hide file manager
+ *  - event handler in file manager
+ */
 export default class FileManager {
+
+  /**
+   * @param {object} api - Editor.js API
+   * @param {Object} config - file manager config
+   */
   constructor({
     config, api
   }) {
@@ -13,7 +23,9 @@ export default class FileManager {
     this._folderId = ''
   }
 
-  //open file manager
+  /**
+ * open file manager
+ */
   async open() {
     this.axios.init();
     this.mw = ModalWindow();
@@ -25,7 +37,9 @@ export default class FileManager {
     }, 100)
   }
 
-  //close filemanager
+  /**
+  * close file manager
+  */
   close() {
     this.mw.classList.remove('open')
     this.mw.classList.add('hide')
@@ -35,12 +49,16 @@ export default class FileManager {
     }, 500)
   }
 
-  //remove file manager to DOM
+  /**
+  * remove file manager to DOM
+  */
   destroyed() {
     this.mw.remove()
   }
 
-  //click in file manager element
+  /**
+  * event handler in file manager
+  */
   async onClick(event) {
     let target = event.target;
     let tagName = target.tagName;
@@ -180,11 +198,6 @@ export default class FileManager {
         }
       }
     } else if (dataSet.close) {
-      if (this.api && !Object.keys(this._data).length) {
-        let currentBlockIndex = this.api.blocks.getCurrentBlockIndex();
-        console.log(this.api)
-        this.api.blocks.delete(currentBlockIndex)
-      }
       this.close()
     } else if (dataSet.file) {
       let nodeActive = this.mw.querySelectorAll('.fm-item.active');
@@ -198,12 +211,16 @@ export default class FileManager {
       let type = "";
       if (objNode.mime.includes('image')) {
         html = `<img src="${this.config.uploadUrl}${objNode.path}">
-                <input type="text" placeholder="Заголовок" value="${objNode.title}">`;
+                <input type="text" placeholder="Заголовок" value="${objNode.title}" class="cdx-input">`;
         type = 'image'
+      } else if (objNode.mime.includes('audio')) {
+        html = `<audio controls>
+                  <source src="${this.config.uploadUrl}${objNode.path}">
+                </audio>`;
+        type = 'audio'
       } else {
         html = `<a href="${this.config.uploadUrl}${objNode.path}" download>${objNode.title}</a>`;
         type = 'file'
-
       }
       this._data.html = html;
       this._data.objNode = objNode;

@@ -1,7 +1,16 @@
 import axios from "axios";
 import { injectDomHtml, getHtmlFolders } from "../util/index";
 
+/**
+ * axios settings and routes
+ */
 export default class restApi {
+  /**
+   * 
+   * @param {String} token token for request
+   * @param {String} apiUrl url for request
+   * @param {Object} routes routes
+   */
   constructor({
     token, apiUrl, routes
   }) {
@@ -11,7 +20,9 @@ export default class restApi {
     this.client = null;
   }
 
-  //init axios and settings
+  /**
+ * axios settings
+ */
   init() {
     this.client = axios.create({
       baseURL: this.apiUrl,
@@ -31,11 +42,20 @@ export default class restApi {
   }
 
   //return routes after change ${_id} to id
+  /**
+   * 
+   * @param {String} route url where replace ${_id} to id
+   * @param {String} id node id
+   * @returns {String} new route replaced ${_id} to id
+   */
   returnRoutes(route, id) {
     return route.replace('${_id}', id)
   }
 
-  //get all folders
+  /**
+   * get all folders
+   * @returns {Array or Object} return array of objects with folders or object one times folder to id
+   */
   async getAllFolders() {
     let el = document.querySelector('.fm');
     let ul = document.querySelector('.fm-content__folders ul');
@@ -54,7 +74,11 @@ export default class restApi {
     }
   }
 
-  //get file/subfolders
+  /**
+ * get file/subfolders
+ * @param {String} id folder id
+ * @returns {Object} return folder to id
+ */
   async getSubFoldersFiles(id) {
     try {
       let { data } = await this.client.get(this.returnRoutes(this.routes.subFoldersAndFiles, id))
@@ -64,7 +88,11 @@ export default class restApi {
     }
   }
 
-  //update folders
+  /**
+ * update folders
+ * @param {String} id folder id
+ * @param {object} payload  {title: 'new title', id: folder id}
+ */
   async updateFolder(id, payload) {
     try {
       await this.client.put(this.returnRoutes(this.routes.updateFolder, id), payload)
@@ -73,7 +101,10 @@ export default class restApi {
     }
   }
 
-  //add folder
+  /**
+ * add folder
+ * @param {object} payload  {title: 'folder name (default : new folder)', folderId: parent folder id or ''}
+ */
   async createFolder(payload) {
     try {
       await this.client.post(this.routes.createFolder, payload)
@@ -82,7 +113,10 @@ export default class restApi {
     }
   }
 
-  //delete folders
+  /**
+* delete folder
+* @param {String} id  folder id
+*/
   async deleteFolder(id) {
     try {
       await this.client.delete(this.returnRoutes(this.routes.deleteFolder, id))
@@ -91,7 +125,11 @@ export default class restApi {
     }
   }
 
-  //update files
+  /**
+ * update files
+ * @param {String} id folder id
+ * @param {object} payload  {title: 'new title', alt: 'new alt'}
+ */
   async updateFile(id, payload) {
     try {
       await this.client.put(this.returnRoutes(this.routes.updateFile, id), payload)
@@ -100,7 +138,10 @@ export default class restApi {
     }
   }
 
-  //delete files
+  /**
+ * delete file
+ * @param {String} id  file id
+ */
   async deleteFile(id) {
     try {
       await this.client.delete(this.returnRoutes(this.routes.deleteFile, id))
@@ -109,7 +150,11 @@ export default class restApi {
     }
   }
 
-  //upload files
+  /**
+ * upload files
+ * @param {String} folderId  folder id where upload file
+ * @param {Object} payload  {folderId: folder id where upload file, file: upload file}
+ */
   async uploadFile(folderId, payload) {
     try {
       await this.client.post(this.returnRoutes(this.routes.uploadFile, folderId), payload)
