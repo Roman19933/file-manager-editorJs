@@ -1,3 +1,9 @@
+### 1.2.0 (2021-04-30)
+
+##### Other Changes
+
+*  add style to loaser and fix style ([1733390b](https://github.com/Roman19933/file-manager-editorJs/commit/1733390b186990a746131f89bc5ac49943266eb3))
+
 #### 1.1.6 (2021-04-30)
 
 ##### Other Changes
