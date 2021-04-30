@@ -56,6 +56,7 @@ export default class EditorJsFm {
                 let input = document.createElement('input');
                 input.setAttribute('type', 'text');
                 input.setAttribute('value', this.data.name);
+                input.classList.add('cdx-input');
                 this.node.name = input;
                 this.node.wrapper.appendChild(img)
                 this.node.wrapper.appendChild(input)

@@ -63,7 +63,7 @@ var editor = EditorJS({
 | -------------- | --------- | ------------------------------- |
 | token          | `string`  | authorization token             |
 | apiUrl         | `string`  | route to the API                |
-| uploadUrl      | `string`  | domain where is image/file      |
+| uploadUrl      | `string`  | domain where is image/file/audio      |
 | routes         | `object`  | routes for work with api        |
 
 ## Routes
@@ -72,12 +72,12 @@ var editor = EditorJS({
 | --------------------------| ------------------------------- |
 | allFoldersOrCurentFolder  | On this route we receive all folders from the server, or a specific folder to id             |
 | subFoldersAndFiles        | On this route we receive all folders and files/images to a specific folder               |
-| updateFolder              | On this route we edit a folder, request params {title: 'new title', id: folder id}      |
+| updateFolder              | On this route we edit a folder, <strong>request params</strong> {title: 'new title', id: folder id}      |
 | deleteFolder              | On this route we deleted a folder        |
-| createFolder              | On this route we create subFolder, request params {title: 'folder name (default: new folder)', folderId: parent folder id or ''}        |
-| updateFile                | On this route we edit a file/image, request params {title: 'new title', alt: 'new alt'}        |
+| createFolder              | On this route we create subFolder, <strong>request params</strong> {title: 'folder name (default: new folder)', folderId: parent folder id or ''}        |
+| updateFile                | On this route we edit a file/image, <strong>request params</strong> {title: 'new title', alt: 'new alt'}        |
 | deleteFile                | On this route we deleted a file/image       |
-| uploadFile                | On this route we upload file/image to folder, request params {folderId: folder id where upload file, file: upload file}        |
+| uploadFile                | On this route we upload file/image to folder, <strong>request params</strong> {folderId: folder id where upload file, file: upload file}        |
 
 If route <strong>allFoldersOrCurentFolder</strong> includes <strong>id</strong> to folder <strong>'filemanager/folders/ID'</strong>, server response 
 must be an object.

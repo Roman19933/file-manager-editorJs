@@ -1,6 +1,6 @@
 import axios from "axios";
 import { injectDomHtml, getHtmlFolders } from "../util/index";
-
+import spinner from "./spinner"
 /**
  * axios settings and routes
  */
@@ -18,6 +18,7 @@ export default class restApi {
     this.apiUrl = apiUrl;
     this.routes = routes;
     this.client = null;
+    this.spinner = new spinner();
   }
 
   /**
@@ -61,6 +62,7 @@ export default class restApi {
     let ul = document.querySelector('.fm-content__folders ul');
     ul.innerHTML = '';
     try {
+      this.spinner.addSpinner();
       let { data } = await this.client.get(this.routes.allFoldersOrCurentFolder)
       if (!Array.isArray(data.data)) {
         return injectDomHtml(el, '.fm-content__folders ul', 'afterbegin', getHtmlFolders(data.data))
@@ -71,6 +73,8 @@ export default class restApi {
 
     } catch (e) {
       console.log(e)
+    } finally {
+      this.spinner.removeSpinner();
     }
   }
 
@@ -81,10 +85,13 @@ export default class restApi {
  */
   async getSubFoldersFiles(id) {
     try {
+      this.spinner.addSpinner();
       let { data } = await this.client.get(this.returnRoutes(this.routes.subFoldersAndFiles, id))
       return data.data;
     } catch (e) {
       console.log(e)
+    } finally {
+      this.spinner.removeSpinner();
     }
   }
 
@@ -95,9 +102,12 @@ export default class restApi {
  */
   async updateFolder(id, payload) {
     try {
+      this.spinner.addSpinner();
       await this.client.put(this.returnRoutes(this.routes.updateFolder, id), payload)
     } catch (e) {
       console.log(e)
+    } finally {
+      this.spinner.removeSpinner();
     }
   }
 
@@ -107,9 +117,12 @@ export default class restApi {
  */
   async createFolder(payload) {
     try {
+      this.spinner.addSpinner();
       await this.client.post(this.routes.createFolder, payload)
     } catch (e) {
       console.log(e)
+    } finally {
+      this.spinner.removeSpinner();
     }
   }
 
@@ -119,9 +132,12 @@ export default class restApi {
 */
   async deleteFolder(id) {
     try {
+      this.spinner.addSpinner();
       await this.client.delete(this.returnRoutes(this.routes.deleteFolder, id))
     } catch (e) {
       console.log(e)
+    } finally {
+      this.spinner.removeSpinner();
     }
   }
 
@@ -132,9 +148,12 @@ export default class restApi {
  */
   async updateFile(id, payload) {
     try {
+      this.spinner.addSpinner();
       await this.client.put(this.returnRoutes(this.routes.updateFile, id), payload)
     } catch (e) {
       console.log(e)
+    } finally {
+      this.spinner.removeSpinner();
     }
   }
 
@@ -144,9 +163,12 @@ export default class restApi {
  */
   async deleteFile(id) {
     try {
+      this.spinner.addSpinner();
       await this.client.delete(this.returnRoutes(this.routes.deleteFile, id))
     } catch (e) {
       console.log(e)
+    } finally {
+      this.spinner.removeSpinner();
     }
   }
 
@@ -157,9 +179,12 @@ export default class restApi {
  */
   async uploadFile(folderId, payload) {
     try {
+      this.spinner.addSpinner();
       await this.client.post(this.returnRoutes(this.routes.uploadFile, folderId), payload)
     } catch (e) {
       console.log(e)
+    } finally {
+      this.spinner.removeSpinner();
     }
   }
 }
