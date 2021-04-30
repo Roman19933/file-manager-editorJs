@@ -1,6 +1,6 @@
 {
   "name": "file-manager-editor-js",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "File Manager Tool for Editor.js",
   "license": "ISC",
   "main": "./dist/js/main.bundle.js",
