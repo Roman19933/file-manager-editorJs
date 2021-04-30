@@ -1,3 +1,9 @@
+#### 1.2.2 (2021-04-30)
+
+##### Refactors
+
+*  clear and optimization code, add loader and style to loader and fix style ([de41d2d1](https://github.com/Roman19933/file-manager-editorJs/commit/de41d2d1c910c61b96b477764f1a956aa94331de))
+
 #### 1.2.1 (2021-04-30)
 
 ##### Other Changes
