@@ -1,8 +1,7 @@
 ![](https://badgen.net/github/watchers/Roman19933/file-manager-editorJs)
 ![](https://badgen.net/github/stars/Roman19933/file-manager-editorJs) 
 ![](https://badgen.net/github/forks/Roman19933/file-manager-editorJs) 
-![](https://badgen.net/github/tag/Roman19933/file-manager-editorJs)
-![](https://badgen.net/github/license/Roman19933/file-manager-editorJs)
+![](https://badgen.net/github/tag/Roman19933/file-manager-editorJs/orange)
 # File Manager To EditorJs
 
 This file manager works with files and photos and audio.
