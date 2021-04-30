@@ -1,4 +1,4 @@
-![](https://badgen.net/badge/watchers/Roman19933/file-manager-editorJs)![](https://badgen.net/badge/stars/Roman19933/file-manager-editorJs) ![](https://badgen.net/badge/forks/Roman19933/file-manager-editorJs) ![](https://badgen.net/badge/tag/Roman19933/file-manager-editorJs) ![]
+![](https://badgen.net/github/watchers/Roman19933/file-manager-editorJs)![](https://badgen.net/github/stars/Roman19933/file-manager-editorJs) ![](https://badgen.net/github/forks/Roman19933/file-manager-editorJs) ![](https://badgen.net/github/tag/Roman19933/generate-soroban-training.svg)
 # File Manager To EditorJs
 
 This file manager works with files and photos and audio.
