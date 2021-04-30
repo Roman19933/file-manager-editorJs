@@ -327,6 +327,11 @@ export default class FileManager {
   * choose file
   */
   async chooseFile() {
+    try {
+      await this.api.saver.save();
+    } catch (e) {
+      console.log(e)
+    }
     if (Object.keys(this._data).length && this.api) {
       this.api.events.emit('add:file', this._data);
       this._data = {};
