@@ -1,3 +1,9 @@
+#### 1.1.6 (2021-04-30)
+
+##### Other Changes
+
+*  fix text] fix ([51173e98](https://github.com/Roman19933/file-manager-editorJs/commit/51173e985e020aaf32fedfe777ff4afc811a9322))
+
 #### 1.1.5 (2021-04-30)
 
 #### 1.1.4 (2021-04-30)
