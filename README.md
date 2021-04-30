@@ -1,3 +1,4 @@
+![](https://badgen.net/badge/watchers/Roman19933/file-manager-editorJs)![](https://badgen.net/badge/stars/Roman19933/file-manager-editorJs) ![](https://badgen.net/badge/forks/Roman19933/file-manager-editorJs) ![](https://badgen.net/badge/tag/Roman19933/file-manager-editorJs) ![]
 # File Manager To EditorJs
 
 This file manager works with files and photos and audio.
