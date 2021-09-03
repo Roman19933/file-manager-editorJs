@@ -1,3 +1,4 @@
+import locale from "../locales";
 /**
  * images
  */
@@ -15,19 +16,42 @@ import upload from "../images/upload.png";
 /**
  * html structure to file manager
  */
-export const ModalWindow = function () {
+export const ModalWindow = function (config) {
   let fmmHTML = `
   <div class="fm-wrapper">
   <div class="fm-top">
     <div class="fm-top__add">
-      <button data-addFolder="true">Add new folder</button>
+      <button data-addFolder="true">${locale[config.lang].addNewFolder}</button>
     </div>
+    <div
+    class="search-form"
+  >
+      <div class="search-form__wrapper">
+        <input
+          type="text"
+          placeholder="${locale[config.lang].chooseFolder}"
+          data-search="true"
+          disabled
+        >
+      </div>
+  </div>
     <button class="btn-close" data-close="true">
       <img data-close="true" src="${close}">
     </button>
   </div>
   <div class="fm-content">
     <div class="fm-content__folders">
+    <div
+    class="search-form"
+  >
+      <div class="search-form__wrapper">
+        <input
+          type="text"
+          placeholder="${locale[config.lang].searchFolderInput}"
+          data-searchFolder="true"
+        >
+      </div>
+  </div>
       <ul class="tree">
       </ul>
     </div>
@@ -36,10 +60,10 @@ export const ModalWindow = function () {
   </div>
   <div class="fm-bottom">
     <button class="button-choose" data-choose="true">
-      Choose
+      ${locale[config.lang].choose}
     </button>
     <button class="button-cancel" data-close="true">
-      Cancel
+      ${locale[config.lang].cancel}
     </button>
   </div>
 </div>
@@ -80,7 +104,7 @@ export const getHtmlFolders = function (folder) {
  * @param {Number} index - index to file in array
  * @param {String} url - furl to file
  */
-export const getFilesForType = function (file, index, url) {
+export const getFilesForType = function (file, index, url, lang) {
   let img = file.mime.includes('image') ? `${url}${file.path}` : file.mime.includes('audio') ? mp3 : fileImg
   return `<div class="fm-item " data-index="${index}" >
                   <div class="fm-item__menu">
@@ -96,8 +120,8 @@ export const getFilesForType = function (file, index, url) {
                       <label for="alt">Alt</label>
                       <input type="text" class="alt" data-alt="true" id="alt" value="${file.alt}">
                       <div class="fm-item__btn" data-index="${index}">
-                        <button data-cancel="true">Отмена</button>   
-                        <button data-send="true">отправить</button>   
+                        <button data-cancel="true">${locale[lang].cancel}</button>   
+                        <button data-send="true">${locale[lang].send}</button>   
                       </div>
                     </div>   
                 </div>`

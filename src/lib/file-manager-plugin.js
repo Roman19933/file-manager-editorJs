@@ -1,5 +1,6 @@
-import { ModalWindow, getFilesForType, getHtmlFolders } from "../util/index";
+import { ModalWindow, getFilesForType, getHtmlFolders, injectDomHtml } from "../util/index";
 import axios from "./axios"
+import locale from "../locales";
 /**
  * Class for work with file manager:
  *  - show/hide file manager
@@ -19,6 +20,7 @@ export default class FileManager {
     this.api = api;
     this._data = {};
     this._files = null;
+    this._folders = null;
     this._subFolders = null;
     this._editFile = {};
     this._folderId = '';
@@ -34,13 +36,14 @@ export default class FileManager {
  */
   async open() {
     this.axios.init();
-    this.mw = ModalWindow();
+    this.mw = ModalWindow(this.config);
     document.body.appendChild(this.mw)
-    this.axios.getAllFolders();
     this.mw.onclick = this.onClick.bind(this);
     await setTimeout(() => {
       this.mw.classList.add('open');
     }, 100)
+    this._folders = await this.axios.getAllFolders();
+    this.setFolders();
   }
 
   /**
@@ -88,7 +91,8 @@ export default class FileManager {
       this._subFolders = data.Folder
       this._files = data.File
       if (this._subFolders.length) this.setSubFolders()
-      if (this._files.length) this.setFiles()
+      this.setFiles()
+      this.onOffSearchInput(true)
     } catch (e) {
       console.log(e)
     }
@@ -115,12 +119,53 @@ export default class FileManager {
   }
 
   /**
+* clear content file
+*/
+  clearContentFiles() {
+    this._content.innerText = '';
+  }
+
+  /**
+ * no found file
+ */
+  setNotFoundContent(text) {
+    this._content.innerText = text;
+  }
+
+  /**
    * rendering files in DOM
    */
-  setFiles() {
-    this._files.forEach((file, index) => {
-      this._content.insertAdjacentHTML('afterbegin', getFilesForType(file, index, this.config.uploadUrl))
-    });
+  setFiles(arr) {
+    let files = arr && arr.length ? arr : this._files;
+    this.clearContentFiles()
+    if (files && files.length) {
+      files.forEach((file, index) => {
+        this._content.insertAdjacentHTML('afterbegin', getFilesForType(file, index, this.config.uploadUrl, this.config.lang))
+      });
+    } else {
+      this.clearContentFiles()
+      this.setNotFoundContent(locale[this.config.lang].noFile)
+    }
+  }
+
+  /**
+   * rendering folders in DOM
+   */
+  setFolders(arr) {
+    let folders = arr ? arr : this._folders;
+    let el = document.querySelector('.fm');
+    let ul = document.querySelector('.fm-content__folders ul');
+    ul.innerHTML = '';
+    if (!Array.isArray(folders)) {
+      return injectDomHtml(el, '.fm-content__folders ul', 'afterbegin', getHtmlFolders(folders))
+    }
+    if (folders && folders.length) {
+      folders.forEach(element => {
+        injectDomHtml(el, '.fm-content__folders ul', 'afterbegin', getHtmlFolders(element))
+      });
+    } else {
+      ul.innerHTML = locale[this.config.lang].notFoundFolder;
+    }
   }
 
   /**
@@ -131,7 +176,7 @@ export default class FileManager {
       let index = +this._parentNode.dataset.index;
       await this.axios.deleteFile(this._files[index].id)
       this._files.splice(index, 1);
-      this._content.innerText = '';
+      // this._content.innerText = '';
       this.setFiles();
     } catch (e) {
       console.log(e)
@@ -145,7 +190,9 @@ export default class FileManager {
     try {
       await this.axios.deleteFolder(this._dataSet.folderid)
       this._content.innerText = '';
-      await this.axios.getAllFolders()
+      this._folders = await this.axios.getAllFolders()
+      this.setFolders()
+      this.onOffSearchInput()
     } catch (e) {
       console.log(e)
     }
@@ -161,7 +208,10 @@ export default class FileManager {
         title: "New folder"
       }
       await this.axios.createFolder(payload)
-      await this.axios.getAllFolders()
+      this._folders = await this.axios.getAllFolders()
+      this.setFolders()
+      this.clearContentFiles()
+      this.onOffSearchInput()
     } catch (e) {
       console.log(e)
     }
@@ -183,7 +233,7 @@ export default class FileManager {
       parentNode.parentNode.parentNode.classList.remove('edit')
       let data = await this.axios.getSubFoldersFiles(this._folderId);
       this._files = data.File
-      this._content.innerText = '';
+      // this._content.innerText = '';
       this.setFiles()
 
     } catch (e) {
@@ -222,12 +272,67 @@ export default class FileManager {
         if (this._folderId === this._dataSet.folderid) {
           let data = await this.axios.getSubFoldersFiles(this._dataSet.folderid);
           this._files = data.File
-          this._content.innerText = '';
+          // this._content.innerText = '';
           this.setFiles()
         }
       } catch (e) {
         console.log(e)
       }
+    }
+  }
+
+  /**
+ * search file
+ */
+  searchFile() {
+    console.dir(this._target)
+    let newArr = [];
+    if (this._files && this._files.length) {
+      this._target.addEventListener('keyup', (e) => {
+        newArr = this._files.filter(item => {
+          return item.title.toLowerCase().includes(e.target.value.toLowerCase());
+        })
+        if (newArr && newArr.length) {
+          this.setFiles(newArr)
+        } else if (!this._folderId) {
+          this.clearContentFiles()
+          this.setNotFoundContent(locale[this.config.lang].chooseFolder)
+        } else {
+          this.clearContentFiles()
+          this.setNotFoundContent(locale[this.config.lang].notFoundFile)
+        }
+      })
+    }
+  }
+
+  /**
+ * search folder
+ */
+  searchFolder() {
+    let newArr = [];
+    if (this._folders && this._folders.length) {
+      this._target.addEventListener('keyup', (e) => {
+        newArr = this._folders.filter(item => {
+          return item.title.toLowerCase().includes(e.target.value.toLowerCase());
+        })
+        if (newArr) {
+          this.setFolders(newArr)
+        }
+      })
+    }
+  }
+
+  /**
+ * on/off search form
+ */
+  onOffSearchInput(on) {
+    let search = this.mw.querySelector('.search-form__wrapper input');
+    if (on) {
+      search.removeAttribute('disabled');
+      search.setAttribute('placeholder', locale[this.config.lang].searchInput);
+    } else {
+      search.setAttribute('disabled', true);
+      search.setAttribute('placeholder', locale[this.config.lang].chooseFolder);
     }
   }
 
@@ -327,6 +432,11 @@ export default class FileManager {
   * choose file
   */
   async chooseFile() {
+    try {
+      await this.api.saver.save();
+    } catch (e) {
+      console.log(e)
+    }
     if (Object.keys(this._data).length && this.api) {
       this.api.events.emit('add:file', this._data);
       this._data = {};
@@ -353,12 +463,14 @@ export default class FileManager {
     if (this._dataSet.addsubfolder || this._dataSet.addfolder) this.addFolder()
     if (this._dataSet.edit) this.clickToEdit()
     if (this._dataSet.cancel) this.clickToCancelEditFile()
-    if (this._dataSet.foldercancel) this.clickToCancelEditFile()
+    if (this._dataSet.foldercancel) this.clickToCancelEditFolder()
     if (this._dataSet.send) this.updateFile()
     if (this._dataSet.foldersend) this.updateFolder()
     if (this._tagName === 'INPUT' && this._dataSet.upload) this.uploadFile()
     if (this._dataSet.close) this.close()
     if (this._dataSet.file) this.clickToFile()
     if (this._dataSet.choose) this.chooseFile()
+    if (this._dataSet.search) this.searchFile()
+    if (this._dataSet.searchfolder) this.searchFolder()
   };
 }

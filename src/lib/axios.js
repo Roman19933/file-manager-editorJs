@@ -58,19 +58,10 @@ export default class restApi {
    * @returns {Array or Object} return array of objects with folders or object one times folder to id
    */
   async getAllFolders() {
-    let el = document.querySelector('.fm');
-    let ul = document.querySelector('.fm-content__folders ul');
-    ul.innerHTML = '';
     try {
       this.spinner.addSpinner();
       let { data } = await this.client.get(this.routes.allFoldersOrCurentFolder)
-      if (!Array.isArray(data.data)) {
-        return injectDomHtml(el, '.fm-content__folders ul', 'afterbegin', getHtmlFolders(data.data))
-      }
-      data.data.forEach(element => {
-        injectDomHtml(el, '.fm-content__folders ul', 'afterbegin', getHtmlFolders(element))
-      });
-
+      return data.data;
     } catch (e) {
       console.log(e)
     } finally {
