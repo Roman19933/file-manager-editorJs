@@ -16,9 +16,6 @@ export default class EditorJsFm {
             config,
             api
         })
-        this.flagChoose = true;
-        this.flagImage = false;
-        this.flagEditImage = false;
         this.node = {
             wrapper: null,
             name: null,
@@ -66,7 +63,7 @@ export default class EditorJsFm {
     renderSettings() {
         const viewWrapper = document.createElement('div');
 
-        if (this.flagImage || this.data.type === 'image') {
+        if (this.data.type === 'image') {
             this.viewFileManager.forEach(view => {
                 const selectTypeButton = document.createElement('span');
 
@@ -146,9 +143,6 @@ export default class EditorJsFm {
 
         // change size methods
         btnResize.addEventListener('click', function () {
-            // let width = `${x.value}px`,
-            //     height = `${y.value}px`
-
             img.style.width = `${x.value}px`
             img.style.height = `${y.value}px`
 
@@ -171,7 +165,7 @@ export default class EditorJsFm {
     render() {
         this.node.wrapper = document.createElement('div');
         this.node.wrapper.classList.add('node-wrapper')
-        if (Object.keys(this.data).length && this.flagChoose) {
+        if (Object.keys(this.data).length) {
             if (this.data.type === 'file') {
                 let a = document.createElement('a');
                 a.setAttribute('href', this.data.url);
@@ -191,7 +185,9 @@ export default class EditorJsFm {
                 this.node.height = this.data.height || '';
                 this.node.wrapper.appendChild(img)
                 this.node.wrapper.appendChild(input)
-                this.flagEditImage = true
+                this.node.name.addEventListener('change', e => {
+                    this.data.name = e.target.value
+                })
             } else {
                 let audio = document.createElement('audio');
                 let source = document.createElement('source');
@@ -200,7 +196,6 @@ export default class EditorJsFm {
                 audio.appendChild(source);
                 this.node.wrapper.appendChild(audio);
             }
-            this.flagChoose = false
 
         } else {
             this.node.button = document.createElement('button');
@@ -226,26 +221,20 @@ export default class EditorJsFm {
      */
     save(e) {
         this.api.events.on('add:file', (event) => {
-            if (event && this.flagChoose) {
-                this.node.button.remove();
+            if (event && !Object.keys(this.data).length) {
+                if (this.node.button) this.node.button.remove();
                 e.insertAdjacentHTML('afterbegin', event.html)
                 this.getFile({
                     type: event.type,
                     name: event.objNode.title
                 })
-                this.flagChoose = false
+            }
+            if (this.data.type === "image" && this.node.name) {
+                this.node.name.addEventListener('change', e => {
+                    this.data.name = e.target.value
+                })
             }
         });
-        if (this.flagImage) {
-            Object.assign(this.data, {
-                url: this.node.url.src,
-                name: this.node.name.value,
-                type: 'image'
-            });
-        }
-        if (this.flagEditImage) {
-            this.data.name = this.node.name.value
-        }
         return this.data
     }
 
@@ -262,7 +251,11 @@ export default class EditorJsFm {
         if (type === 'image') {
             this.node.name = this.node.wrapper.querySelector('input')
             this.node.url = this.node.wrapper.querySelector('img')
-            this.flagImage = true;
+            Object.assign(this.data, {
+                url: this.node.url.src,
+                name: this.node.name.value,
+                type: 'image'
+            });
         } else if (type === 'file') {
             this.node.name = this.node.wrapper.querySelector('a').text
             this.node.url = this.node.wrapper.querySelector('a').href

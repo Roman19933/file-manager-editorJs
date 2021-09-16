@@ -40,6 +40,7 @@ var editor = EditorJS({
     fileManager: {
       class: EditorJsFm,
       config: {
+        lang:"ru" || "en",
         token: "token",
         apiUrl: "https://example/api/v1",
         uploadUrl: "https://example",
